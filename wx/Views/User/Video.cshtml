@@ -1,0 +1,282 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @*<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">*@
+    <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+    <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <title></title>
+    <style>
+        body{
+            color: #555;
+            font-family:Helvetica;
+            margin: 15px;
+            /*去掉默认外观*/
+            -webkit-appearance:none;
+            /*长按不触发系统菜单*/
+            -webkit-touch-callout: none;
+            /*禁止选中文字*/
+            -webkit-user-select:none;
+        }
+        @@font-face {
+        font-family: 'MicrosoftYaHei';
+        src: url('MicrosoftYaHei.eot'); /* IE9 Compat Modes */
+        src: url('MicrosoftYaHei.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                 url('MicrosoftYaHei.woff') format('woff'), /* Modern Browsers */
+                 url('MicrosoftYaHei.ttf')  format('truetype'), /* Safari, Android, iOS */
+                 url('MicrosoftYaHei.svg#MicrosoftYaHei') format('svg'); /* Legacy iOS */
+           }
+        html{
+            font-size:13px;
+            height: 100%;
+            -webkit-tap-highlight-color: transparent;
+            }
+        @@media screen and (min-width:321px) and (max-width:375px){
+            html{font-size:11px}
+            .logo-box{
+                position: absolute;
+                top: -56px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        @@media screen and (min-width:376px) and (max-width:414px){
+            html{font-size:12px}
+            .logo-box{
+                position: absolute;
+                top: -56px;
+                 left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        @@media screen and (min-width:415px) and (max-width:639px){html{font-size:15px}}
+        @@media screen and (min-width:640px) and (max-width:719px){html{font-size:20px}}
+        @@media screen and (min-width:720px) and (max-width:749px){html{font-size:22.5px}}
+        @@media screen and (min-width:750px) and (max-width:799px){html{font-size:23.5px}}
+        @@media screen and (min-width:800px){html{font-size:25px}}
+
+        .main{
+            margin-bottom: 40px;
+        }
+
+        .video-js {
+            display: block;
+            vertical-align: top;
+            box-sizing: border-box;
+            color: #fff;
+            background-color: #000;
+            position: relative;
+            padding: 0;
+            font-size: 12px;
+            line-height: 1;
+            font-weight: normal;
+            font-style: normal;
+            font-family: Arial, Helvetica, sans-serif;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            height: 200px;
+        }
+
+        .videoPlayer{
+            width: 100%;
+            position: relative;
+            margin-bottom: 15px;
+            /*background: #555;*/
+        }
+        #video{
+            android:layout_margin="0dp";
+            android:padding="0dp";
+        }
+        #audioControls,.video-explain-3{
+            margin-bottom: 15px;
+        }
+        #playBtn{
+            width: 5.5em;
+            position: absolute;
+            top: 72px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9;
+            cursor: pointer;
+        }
+        .vaccine{
+            width: 100%;
+            margin: 15px 0;
+        }
+        .video-info{
+            margin-bottom: 20px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <!--<div>-->
+    @*<embed src="@Url.Content("~/Video/Wildlife.wmv")">
+        <iframe frameborder="0" src="~/Video/Wildlife.wmv" allowfullscreen></iframe>*@
+    <!--<iframe frameborder="0" src="https://v.qq.com/txp/iframe/player.html?vid=i0024ihpojs" allowFullScreen="true"></iframe>
+        <video width="800" height="600" controls>
+            <source src="~/Video/Wildlife.wmv" type="video/x-ms-wmv" />
+        </video>
+    </div>-->
+    @*<h3>partial content demonstration</h3>
+        <hr />
+        <video id="mainplayer" width="640" height="360"
+                   autoplay="autoplay" controls="controls" onloadeddata="onload()">
+                <source src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-imgbed/21ada218-1f7b-456f-af42-99360abc0e6d.mp4" />
+            </video>*@
+    <div class="video-play-content">
+        <!--视频-->
+        <div class="videoPlayer video-js" id="videoContainer" style="height: 200px;margin-bottom: 15px;">
+            <video id="video" width="100%" height="200" preload controls style="object-fit: fill" webkit-playsinline="true" x-webkit-airplay="true" playsinline="true" x5-video-player-type="h5" x5-video-player-fullscreen="true">
+                @*<source src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-imgbed/21ada218-1f7b-456f-af42-99360abc0e6d.mp4" />*@
+                <source src="~/Video/Wildlife1.mp4" />
+            </video>
+            <div id="videoControls">
+                <div class="video-box">
+                    <img id="playBtn" src="" />
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    var audioPlayImg = "../Image/play.jpg";  //播放按钮
+    var pauseImg = "../Image/pause.jpg";  //暂停按钮
+
+    (function (window, document) {
+        //searchVideo();
+
+        //获取要操作的元素
+        var video = document.getElementById("video");
+
+        var audio = document.getElementById('audio');
+
+        var videoControls = document.getElementById("videoControls");
+
+        var videoContainer = document.getElementById("videoContainer");
+
+        var controls = document.getElementById("video_controls");
+
+        var playBtn = document.getElementById("playBtn");
+
+        var fullScreenFlag = false;
+        var progressFlag;
+
+        // 视频：  创建我们的操作对象，我们的所有操作都在这个对象上。
+        var videoPlayer = {
+            init: function () {
+                var that = this;
+                //删除视频的播放按钮属性
+                video.removeAttribute("controls");
+
+                //如果当前的数据是可用的，为视频绑定事件
+                bindEvent(video, "loadeddata", videoPlayer.initControls);
+                videoPlayer.operateControls();
+            },
+            initControls: function () {
+                videoPlayer.showHideControls();
+            },
+            showHideControls: function () {
+                bindEvent(video, "mouseover", showControls);
+                bindEvent(videoControls, "mouseover", showControls);
+                bindEvent(video, "mouseout", hideControls);
+                bindEvent(videoControls, "mouseout", hideControls);
+            },
+            operateControls: function () {
+                bindEvent(playBtn, "click", isIOSOrAndroid);
+                bindEvent(video, "click", isIOSOrAndroid);
+            }
+        }
+
+        videoPlayer.init();
+
+        // 原生的JavaScript事件绑定函数
+        function bindEvent(ele, eventName, func) {
+            if (window.addEventListener) {
+                ele.addEventListener(eventName, func);
+            } else {
+                ele.attachEvent('on' + eventName, func);
+            }
+        }
+
+        // 显示video的控制面板
+        function showControls() {
+            // 为了让控制面板一直出现，我把videoControls.style.opacity的值改为1
+            videoControls.style.opacity = 1;
+        }
+
+        // 隐藏video的控制面板
+        function hideControls() {
+            videoControls.style.opacity = 1;
+        }
+
+        //判断当前系统是iOS系统还是安卓系统，因为iOS微信浏览器会加载完视频后自动添加一个播放按钮。而我们的播放按钮是自定义的
+        function isIOSOrAndroid() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/iPhone\sOS/i) == "iphone os") {
+                iOSPlay();
+            } else if (ua.match(/Android/i) == "android") {
+                androidPlay();
+            }
+        }
+
+        // 控制video的播放   当前操作是在iOS系统下操作
+        function iOSPlay() {
+            $('.videoPlayer').css('margin-bottom', '0');
+            if (video.paused || video.ended) {
+                if (video.ended) {
+                    video.currentTime = 0;
+                }
+                video.play();
+                playBtn.setAttribute('src', pauseImg);
+            } else {
+                video.pause();
+                playBtn.setAttribute('src', audioPlayImg);
+                clearInterval(progressFlag);
+            }
+        }
+
+        // 控制video的播放   当前操作是在安卓系统下操作
+        function androidPlay() {
+            if (video.paused || video.ended) {
+                if (video.ended) {
+                    video.currentTime = 0;
+                }
+                video.play();
+                playBtn.setAttribute('src', audioPlayImg);
+            } else {
+                video.pause();
+                playBtn.setAttribute('src', audioPlayImg);
+                clearInterval(progressFlag);
+            }
+        }
+
+        video.addEventListener('ended', function () {
+            //debugger;
+            //监听到播放结束后，在此处可调用自己的接口
+            console.log("--------------end-------------")
+            $.ajax({
+                type: "post",
+                url: "/User/Tiao",
+                success: function (data) {
+                    //window.location.href = '/Login/Index';
+                    window.location.href = '@Url.Action("Wenjuan", "User")';
+                },
+                error: function (err) { }
+            });
+
+        }, false);
+
+    }(this, document))
+
+</script>

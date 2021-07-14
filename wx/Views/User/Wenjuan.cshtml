@@ -1,0 +1,688 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <title></title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, sans-serif,'微软雅黑' !important;
+            background: #f5f6fb;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        body, div, ul, li, input, a, img {
+            margin: 0;
+            padding: 0;
+            border: none;
+            font-family: 'Helvetica Neue', Helvetica, sans-serif,'微软雅黑' !important;
+        }
+
+        .risk {
+            margin-top: 1rem;
+            color: #333;
+            font-size: 1.3rem;
+        }
+
+            .risk .select ul li {
+                display: none;
+            }
+
+                .risk .select ul li.active {
+                    display: block;
+                }
+
+                .risk .select ul li .line {
+                    transition: all 0.5s;
+                    border-bottom: 1px solid #ccc;
+                    padding: 1rem 2rem 1rem;
+                    position: relative;
+                }
+
+                .risk .select ul li p.line {
+                    font-size: 1.4rem;
+                }
+
+                .risk .select ul li div.line {
+                    padding: 1rem 3.5rem 1rem 2rem
+                }
+
+                .risk .select ul li input[type=radio] {
+                    position: absolute;
+                    top: 50%;
+                    transform: translate(0,-50%);
+                    right: 1rem;
+                }
+
+                .risk .select ul li .check-img {
+                    background: url("../Image/check.jpg") no-repeat center;
+                    height: 2rem;
+                    background-size: 100%;
+                    position: absolute;
+                    top: 50%;
+                    -webkit-transform: translate(0,-50%);
+                    transform: translate(0,-50%);
+                    right: 1rem;
+                    width: 2rem;
+                }
+
+            .risk .pro-box {
+                text-align: center;
+            }
+
+            .risk .select ul li .check-img.uncheck {
+                background: url("../Image/uncheck.jpg") no-repeat center;
+                height: 2rem;
+                background-size: 100%;
+                position: absolute;
+                top: 50%;
+                -webkit-transform: translate(0,-50%);
+                transform: translate(0,-50%);
+                right: 1rem;
+                width: 2rem;
+            }
+
+            .risk .pro-box {
+                text-align: center;
+            }
+
+                .risk .pro-box .pro-bg {
+                    width: 90%;
+                    background: #e4e4ea;
+                    height: .6rem;
+                    margin: 2rem auto auto;
+                    border-radius: 2rem;
+                }
+
+                    .risk .pro-box .pro-bg .pro-col {
+                        width: 10%;
+                        background: #5175b3;
+                        height: 100%;
+                        border-radius: 2rem;
+                    }
+
+            .risk .btns {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+                .risk .btns div {
+                    width: 49.7%;
+                    height: 3.5rem;
+                    line-height: 3.5rem;
+                    float: left;
+                    border-top: 1px solid #ddd;
+                    border-right: 1px solid #ddd;
+                }
+
+                    .risk .btns div:nth-child(2) {
+                        border-right: 0;
+                    }
+
+                    .risk .btns div.blue {
+                        color: #5175b3;
+                    }
+
+        #choice-tip {
+            display: none;
+            border-radius: .5rem;
+            font-size: 1.5rem;
+            background: #000;
+            color: #fff;
+            padding: 1rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+        }
+
+        .result-box {
+            font-size: 1.2rem;
+            color: #666;
+            padding-top: 3rem;
+            text-align: center;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+            .result-box img {
+                width: 45%;
+                margin: 1.5rem auto;
+            }
+
+            .result-box .result-txt {
+                padding: 0 4rem;
+                text-align: justify;
+                line-height: 1.8rem;
+            }
+
+                .result-box .result-txt .result-money {
+                    color: #5175b3;
+                }
+
+            .result-box .ok-btn {
+                width: 70%;
+                margin: 2rem auto 1rem;
+                padding: 1rem 0;
+                background: #5175b3;
+                color: #fff;
+                font-size: 1.3rem;
+                border-radius: .5rem;
+            }
+
+        #reset {
+            color: #5175b3;
+            margin-bottom: 2rem;
+            font-size: 1.3rem;
+        }
+
+        @@media screen and (max-width:399px) {
+            html {
+                font-size: 12px !important;
+            }
+        }
+
+        @@media (min-width: 400px) and (max-width: 480px) {
+            html {
+                font-size: 14px !important;
+            }
+        }
+
+        @@media (min-width: 481px) and (max-width: 640px) {
+            html {
+                font-size: 20px !important;
+            }
+        }
+
+        @@media (min-width: 641px) and (max-width: 960px) {
+            html {
+                font-size: 26px !important;
+            }
+        }
+
+        @@media screen and (min-width: 961px) {
+            html {
+                font-size: 36px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <section class="risk">
+            <div class="select">
+                <ul id="subjectBox">
+                </ul>
+            </div>
+            <div class="pro-box">
+                <div class="pro-bg">
+                    <div class="pro-col" id="scroller"></div>
+                </div>
+                <p><span id="current"></span>/<span id="total"></span></p>
+            </div>
+            <div class="btns">
+                <div id="preBtn">上一题</div>
+                <div id="nextBtn" class="blue">下一题</div>
+            </div>
+        </section>
+        <section>
+            <div id="choice-tip">请选择答案!</div>
+        </section>
+        <section class="result-box">
+            <p>-您当前的风险承受能力-</p>
+            <div class="result-1">
+                <img src="" id="result-img">
+                <div class="result-txt">
+                    <div id="result-type"></div>
+                    <div class="result-money">
+                        <p>建议最大投资金额：<span id="max-money"></span></p>
+                        <p>您当前已投资金额：<span id="invest-money"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="ok-btn">确定</div>
+            <div id="reset">重新测评</div>
+        </section>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+
+    var object = {
+        "question_items": [{
+            "title": "您的年龄是：",
+            "type": "TYPE_RADIO",
+            "answers_items": [{
+                "result": "A",
+                "point": 10,
+                "content": "18-30岁"
+            }, {
+                "result": "B",
+                "point": 8,
+                "content": "31-40岁"
+            }, {
+                "result": "C",
+                "point": 5,
+                "content": "41-50岁"
+            }, {
+                "result": "D",
+                "point": 3,
+                "content": "50岁以上"
+            }]
+        }, {
+            "title": "您的家庭年收入为（税后折合人民币）？",
+            "type": "TYPE_RADIO",
+            "answers_items": [{
+                "result": "A",
+                "point": 3,
+                "content": "10万以下"
+            }, {
+                "result": "B",
+                "point": 5,
+                "content": "10-30万"
+            }, {
+                "result": "C",
+                "point": 8,
+                "content": "30-100万"
+            }, {
+                "result": "D",
+                "point": 10,
+                "content": "100万以上"
+            }]
+        }, {
+            "title": "您期望的投资期限是多久？",
+            "type": "TYPE_RADIO",
+            "answers_items": [{
+                "result": "A",
+                "point": 4,
+                "content": "活期"
+            }, {
+                "result": "B",
+                "point": 6,
+                "content": "1-3个月"
+            }, {
+                "result": "C",
+                "point": 8,
+                "content": "4-6个月"
+            }, {
+                "result": "D",
+                "point": 10,
+                "content": "7-12个月"
+            }]
+        }, {
+            "title": "以下金融投资方式，您投资比例最高的在以下哪一类？",
+            "type": "TYPE_RADIO",
+            "answers_items": [{
+                "result": "A",
+                "point": 3,
+                "content": "基本没有金融产品相关知识，除存款、国债外，我几乎不投资其他金融产品"
+            }, {
+                "result": "B",
+                "point": 5,
+                "content": "对金融产品有初步认识，除投资于存款、国债外，偶尔投资于股票、基金等产品"
+            }, {
+                "result": "C",
+                "point": 8,
+                "content": "对金融产品有一定的理解，投资过存款、国债、银行理财产品、信托产品、股票、基金等产品"
+            }, {
+                "result": "D",
+                "point": 10,
+                "content": "金融专业人士，长期投资于证券、期货等产品"
+            }]
+        }, {
+            "title": "您有多少年投资风险产品的经验（如：股票、P2P、基金、外汇、金融衍生产品等）？",
+            "type": "TYPE_RADIO",
+            "answers_items": [{
+                "result": "A",
+                "point": 3,
+                "content": "没有经验"
+            }, {
+                "result": "B",
+                "point": 5,
+                "content": "2年以下"
+            }, {
+                "result": "C",
+                "point": 8,
+                "content": "2-5年"
+            }, {
+                "result": "D",
+                "point": 10,
+                "content": "5年以上"
+            }]
+        }, {
+            "title": "您的家庭收入每年可用于金融投资的比例为？",
+            "type": "TYPE_RADIO",
+            "answers_items": [{
+                "result": "A",
+                "point": 3,
+                "content": "10%以内"
+            }, {
+                "result": "B",
+                "point": 5,
+                "content": "10%-25%"
+            }, {
+                "result": "C",
+                "point": 8,
+                "content": "25%-50%"
+            }, {
+                "result": "D",
+                "point": 10,
+                "content": "50%以上"
+            }]
+        }, {
+            "title": "您对P2P投资希望达到的年收益率水平？",
+            "type": "TYPE_RADIO",
+            "answers_items": [{
+                "result": "A",
+                "point": 3,
+                "content": "7%～10%"
+            }, {
+                "result": "B",
+                "point": 5,
+                "content": "10%～15%"
+            }, {
+                "result": "C",
+                "point": 8,
+                "content": "15%～20%"
+            }, {
+                "result": "D",
+                "point": 10,
+                "content": "20%以上"
+            }]
+        }, {
+            "title": "您在过去所有的投资理财经历中是否有过亏损或被套的经历？",
+            "type": "TYPE_RADIO",
+            "answers_items": [{
+                "result": "A",
+                "point": 10,
+                "content": "从未亏损或被套"
+            }, {
+                "result": "B",
+                "point": 8,
+                "content": "亏损或被套在30%以内"
+            }, {
+                "result": "C",
+                "point": 5,
+                "content": "亏损或被套在30%—60%"
+            }, {
+                "result": "D",
+                "point": 3,
+                "content": "亏损或被套在60%以上"
+            }]
+        }, {
+            "title": "在您每年的家庭收入中，可用于金融投资（储蓄存款除外）的比例为？",
+            "type": "TYPE_RADIO",
+            "answers_items": [{
+                "result": "A",
+                "point": 3,
+                "content": "10%以下"
+            }, {
+                "result": "B",
+                "point": 5,
+                "content": "10%-25%"
+            }, {
+                "result": "C",
+                "point": 8,
+                "content": "25%-50%"
+            }, {
+                "result": "D",
+                "point": 10,
+                "content": "50%以上"
+            }]
+        }, {
+            "title": "您目前投资了多少家P2P平台？",
+            "type": "TYPE_RADIO",
+            "answers_items": [{
+                "result": "A",
+                "point": 3,
+                "content": "0-3家"
+            }, {
+                "result": "B",
+                "point": 5,
+                "content": "4-8家"
+            }, {
+                "result": "C",
+                "point": 8,
+                "content": "8-12家"
+            }, {
+                "result": "D",
+                "point": 10,
+                "content": "12家以上"
+            }]
+        }]
+    }
+    var subjectArray = object['question_items'];
+
+    // 当前题目索引
+    var currentSubjectIndex = 1;
+    // 总题数
+    var subjectTotal = subjectArray.length;
+    // 上一题按钮
+    var $preBtn = $("#preBtn");
+    // 下一题按钮    
+    var $nextBtn = $("#nextBtn");
+    // 题目容器
+    var $subjectBox = $("#subjectBox");
+    // 总题数容器
+    var $total = $("#total");
+
+    // 进度条
+    var $scroller = $("#scroller");
+
+    //重新测评按钮
+    var $reset = $("#reset");
+
+
+
+    $('body').on('click', '#subjectBox div.line', function () {
+        if (currentSubjectIndex >= 1) {
+            $preBtn.addClass("blue");
+        }
+        //get为选中的答案标识
+        $(this).find(".check-img").removeClass("uncheck").addClass("get");
+        $(this).siblings().find(".check-img").addClass("uncheck");
+        setTimeout(nextPage, 300);
+    });
+
+
+    // 选中题目点击
+    $subjectBox.find("div.line").on("click", function () {
+        if (currentSubjectIndex >= 1) {
+            $preBtn.addClass("blue");
+        }
+        //get为选中的答案标识
+        $(this).find(".check-img").removeClass("uncheck").addClass("get");
+        $(this).siblings().find(".check-img").addClass("uncheck");
+        setTimeout(nextPage, 300);
+    });
+
+    // 上一题按钮点击
+    $preBtn.on("click", function () { prePage(); });
+
+    // 下一题按钮点击
+    $nextBtn.on("click", function () { nextPage(); });
+
+    //重新测评按钮点击
+    $reset.on("click", function () { resetTest(); });
+
+    /**
+         * 初始化题目容器
+         */
+    function initSubjectBox() {
+        var subjectHtml = '';
+        for (var i = 0; i < subjectArray.length; i++) {
+            subjectHtml += getSubjectHtml(subjectArray[i], i + 1);
+        }
+
+        $subjectBox.html(subjectHtml);
+        $("#index_" + currentSubjectIndex).addClass("active");
+
+        // 改变进度条
+        changeScroller();
+    }
+
+    /**
+     * 获取题目HTML
+     */
+    function getSubjectHtml(subject, index) {
+        var subjectItemHtml = getSubjectItemHtml(subject['answers_items'], index);
+        var html = ''
+            + '<li id="index_' + index + '">'
+            + '<p class="line">'
+            + '<span>' + index + '.</span>'
+            + '<span>' + subject.title + '</span>'
+            + '</p>'
+            + subjectItemHtml
+            + '</li>'
+        return html;
+    }
+
+    /**
+     * 获取题目选项HTML
+     */
+    function getSubjectItemHtml(subjectItemArray, index) {
+        var html = '';
+        for (var i = 0; i < subjectItemArray.length; i++) {
+            var subjectItem = subjectItemArray[i];
+            html += ''
+                + '<div class="line" value="' + subjectItem.point + '">'
+                + '<span>' + subjectItem.result + '.</span>'
+                + '<span>' + subjectItem.content + '</span>'
+                + '<div class="check-img uncheck">' + '</div>'
+                + '</div>';
+        }
+        return html;
+    }
+
+    /**
+     * 改变进度条
+     */
+    function changeScroller() {
+        $scroller.width(currentSubjectIndex / subjectTotal * 100 + "%");
+    }
+
+    /**
+     * 获取总分数
+     */
+    function getTotalPoint() {
+        var result = 0;
+        var selectedOptionArray = $subjectBox.find(".get");
+        $(selectedOptionArray).each(function () {
+            result += parseInt($(this).parent().attr("value"));
+        });
+        return result;
+    }
+
+    /**
+     * 上一题
+     */
+    function prePage() {
+        //console.log(currentSubjectIndex);
+        if (currentSubjectIndex <= 1) { return; }
+        if (currentSubjectIndex == 2) { $preBtn.removeClass("blue"); }
+        currentSubjectIndex--;
+        flipPage();
+    }
+
+    /**
+     * 下一题
+     */
+    function nextPage() {
+        //console.log(currentSubjectIndex);
+        if (currentSubjectIndex >= 1) {
+            $preBtn.addClass("blue");
+        }
+        var nopass = $("#index_" + currentSubjectIndex).find(".get").length == 0 ? true : false;
+        if (nopass) {
+            $("#choice-tip").fadeIn();
+            setTimeout("$('#choice-tip').fadeOut()", 1000);
+            return;
+        }
+        if (currentSubjectIndex == subjectTotal) {
+            //得出结果
+            var result = getTotalPoint();
+            //console.log("您的得分是：" + result);
+            var imgSrc = $("#result-img"),
+                resultType = $("#result-type"),
+                maxMoney = $("#max-money"),
+                investMoney = $("#invest-money");
+
+            if (result >= 0 && result <= 22) {
+                imgSrc.attr("src", "img/risk-test/result1.png");
+                resultType.html("评测结果：保守型")
+                maxMoney.html("10万元");
+                investMoney.html("30,000.12元")
+            } else if (result >= 23 && result <= 44) {
+                imgSrc.attr("src", "img/risk-test/result2.png");
+                resultType.html("评测结果：稳健型")
+                maxMoney.html("20万元");
+                investMoney.html("30,000.12元")
+            } else if (result >= 45 && result <= 66) {
+                imgSrc.attr("src", "img/risk-test/result3.png");
+                resultType.html("评测结果：平衡型")
+                maxMoney.html("30万元");
+                investMoney.html("30,000.12元")
+            } else if (result >= 67 && result <= 88) {
+                imgSrc.attr("src", "img/risk-test/result4.png");
+                resultType.html("评测结果：积极型")
+                maxMoney.html("40万元");
+                investMoney.html("30,000.12元")
+            } else {
+                imgSrc.attr("src", "img/risk-test/result5.png");
+                resultType.html("评测结果：激进型")
+                maxMoney.html("50万元");
+                investMoney.html("30,000.12元")
+            }
+            $(".risk").fadeOut();
+            $(".result-box").fadeIn();
+            return;
+        }
+        currentSubjectIndex++;
+        flipPage()
+    }
+
+    /**
+     * 翻页
+     */
+    function flipPage() {
+        $subjectBox.find("li").removeClass("active");
+        $("#index_" + currentSubjectIndex).addClass("active");
+        $("#current").html(currentSubjectIndex);
+        changeScroller();
+    }
+
+    /**
+     * 重新测评
+     */
+    function resetTest() {
+        currentSubjectIndex = 1;
+        $(".risk").fadeIn();
+        $(".result-box").fadeOut();
+        $preBtn.removeClass("blue");
+        $(".check-img").removeClass("get").addClass("uncheck");
+        flipPage();
+    }
+
+    $(document).ready(function () {
+        initSubjectBox();
+        $("#current").html(currentSubjectIndex);
+        $total.html(subjectTotal);
+    });
+
+</script>

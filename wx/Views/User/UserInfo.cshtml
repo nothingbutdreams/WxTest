@@ -1,0 +1,151 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/vue.js"></script>
+    <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <style>
+        .el-row {
+            margin-bottom: 20px;
+            &:last-child
+
+        {
+            margin-bottom: 0;
+        }
+
+        }
+
+        .el-col {
+            border-radius: 4px;
+        }
+
+        .bg-purple-dark {
+            background: #99a9bf;
+        }
+
+        .bg-purple {
+            background: #d3dce6;
+        }
+
+        .bg-purple-light {
+            background: #e5e9f2;
+        }
+
+        .grid-content {
+            border-radius: 4px;
+            min-height: 36px;
+        }
+
+        .row-bg {
+            padding: 10px 0;
+            background-color: #f9fafc;
+        }
+
+        .md_headpic {
+            border: none;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        .block2 {
+            text-align: center;
+        }
+
+        .juzhong {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="head">
+
+        <el-row class="demo-avatar demo-basic">
+            <el-col :span="24">
+                <div class="demo-basic--circle">
+                    <div class="block2"><el-avatar class="md_headpic" :size="50" :src="circleUrl"></el-avatar></div>
+
+                </div>
+            </el-col>
+
+        </el-row>
+
+    </div>
+    <div id="app">
+        <el-container>
+            <el-main>
+                @*<el-row class="demo-avatar demo-basic">
+                        <el-col :span=auto>
+                            <div class="demo-basic--circle">
+                                <div class="block2"><el-avatar class="md_headpic" :size="50" :src="circleUrl"></el-avatar></div>
+                            </div>
+                        </el-col>
+                    </el-row>*@
+                <el-row>
+                    <el-col :span="12"><div class="grid-content bg-purple juzhong">@ViewBag.nickName</div></el-col>
+                    <el-col :span="12"><div class="grid-content bg-purple-light juzhong">@ViewBag.openid</div></el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="8"><div class="grid-content bg-purple juzhong">@ViewBag.country</div></el-col>
+                    <el-col :span="8"><div class="grid-content bg-purple-light juzhong">@ViewBag.province</div></el-col>
+                    <el-col :span="8"><div class="grid-content bg-purple juzhong">@ViewBag.city</div></el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+                    <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
+                    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+                    <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
+                    <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
+                    <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
+                    <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
+                    <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
+                    <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
+                </el-row>
+            </el-main>
+        </el-container>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            message: 'hello my vue programm'
+        }
+    });
+    //this.$http({
+    //    url: this.$http.adornUrl('后台返回连接地址'),
+    //    method: 'get',
+    //    params: this.$http.adornParams({
+    //        'keyword': '男',
+    //        'page': 1,
+    //        'limit': 10
+    //    })
+    //}).then(({ data }) => {
+    //    this.tableData = data.page.list    // 注意这里，后台返回的json格式不一样写的就不一样
+    //    console.log(JSON.stringify(data))
+    //}).catch(function (error) {
+    //    console.log(error)
+    //})
+    var url = '@ViewBag.headimgurl';
+    var Main = {
+        data() {
+            return {
+                circleUrl: url,
+                sizeList: ["large"]
+            }
+        }
+    }
+    var Ctor = Vue.extend(Main)
+    new Ctor().$mount('#head')
+</script>
